@@ -1,0 +1,19 @@
+{
+  "description": "Full factorial extension including the proposal's 50 percent condition",
+  "replications": 5,
+  "seed": 2026,
+  "conditions": [
+    {"policy": "other", "contention_pct": 0},
+    {"policy": "other", "contention_pct": 50},
+    {"policy": "other", "contention_pct": 100},
+    {"policy": "other", "contention_pct": 200},
+    {"policy": "batch", "contention_pct": 0},
+    {"policy": "batch", "contention_pct": 50},
+    {"policy": "batch", "contention_pct": 100},
+    {"policy": "batch", "contention_pct": 200},
+    {"policy": "fifo", "contention_pct": 0},
+    {"policy": "fifo", "contention_pct": 50},
+    {"policy": "fifo", "contention_pct": 100},
+    {"policy": "fifo", "contention_pct": 200}
+  ]
+}

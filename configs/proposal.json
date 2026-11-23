@@ -1,0 +1,14 @@
+{
+  "description": "Seven proposal groups with five replications, randomized within replication blocks",
+  "replications": 5,
+  "seed": 2026,
+  "conditions": [
+    {"policy": "other", "contention_pct": 0},
+    {"policy": "other", "contention_pct": 100},
+    {"policy": "other", "contention_pct": 200},
+    {"policy": "batch", "contention_pct": 100},
+    {"policy": "batch", "contention_pct": 200},
+    {"policy": "fifo", "contention_pct": 100},
+    {"policy": "fifo", "contention_pct": 200}
+  ]
+}
