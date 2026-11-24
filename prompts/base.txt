@@ -1,0 +1,1 @@
+Explain how an operating system shares CPU time between several runnable programs. Discuss fairness, response time, throughput, and the effects of background computation. Use clear sentences and continue with concrete examples until the generation limit.
