@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""TEST DOUBLE. No model execution. Never use this fixture for research."""
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
+import os
+import subprocess
+import sys
+import time
+
+MODEL = {"name": "test:3b", "model": "test:3b", "digest": "test-only-digest",
+         "size_vram": 0, "details": {"quantization_level": "Q4_K_M"}}
+runner = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(600)"])
+print(f"TEST_DOUBLE server={os.getpid()} runner={runner.pid}", flush=True)
+
+
+class Handler(BaseHTTPRequestHandler):
+    def log_message(self, *args):
+        pass
+
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        response = {"version": "test-only"} if self.path == "/api/version" else {"models": [MODEL]}
+        self.wfile.write(json.dumps(response).encode())
+
+    def do_POST(self):
+        data = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+        self.send_response(200)
+        self.end_headers()
+        if self.path == "/api/show":
+            self.wfile.write(json.dumps({"details": MODEL["details"]}).encode())
+            return
+        if os.environ.get("TEST_OLLAMA_HANG"):
+            time.sleep(600)
+        count = data["options"]["num_predict"]
+        for _ in range(count):
+            self.wfile.write(b'{"response":"x","done":false}\n')
+            self.wfile.flush()
+            time.sleep(0.005)
+        self.wfile.write((json.dumps({"done": True, "eval_count": count,
+            "eval_duration": count * 5000000, "prompt_eval_count": 128}) + "\n").encode())
+
+
+ThreadingHTTPServer(("127.0.0.1", int(os.environ["OLLAMA_HOST"].split(":")[-1])), Handler).serve_forever()

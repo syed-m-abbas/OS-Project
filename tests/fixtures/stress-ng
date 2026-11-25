@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+"""TEST DOUBLE exercising contended-process accounting, not stress-ng performance."""
+import os
+
+print(f"TEST_DOUBLE stress={os.getpid()}", flush=True)
+value = 1
+while True:
+    value = (value * 17 + 3) % 10000019
