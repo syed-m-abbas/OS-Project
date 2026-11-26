@@ -1,0 +1,10 @@
+{
+  "description": "Laptop execution check only: short output, no contention, not the research matrix",
+  "replications": 1,
+  "seed": 2026,
+  "conditions": [
+    {"policy": "other", "contention_pct": 0},
+    {"policy": "batch", "contention_pct": 0},
+    {"policy": "fifo", "contention_pct": 0}
+  ]
+}
